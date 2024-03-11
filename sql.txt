@@ -1,0 +1,70 @@
+wind auth. herhangi bir şifre girmeden girebiliriz
+sql server auth. sa kullanıcı adıyla giriliyor.
+
+configuration manager -- servis ayarlamalrı yaparız.
+sql server network conf -- TCP/IP enabled olmalı,  ıpv4 enabled olmalı. bu ayarlardan sonra servisi yeniden başlatmka gerekir.
+güvenlik duvar yüzünden port bağlantıları kapanır. 1433sql server duvarı portu açmak gerekki dışarıdan bağlantı sağlar.
+
+virual machine settingste ayarlardan network host only sçeneği seçili olmalı. sanal ağ kurulur. VMnet0 kullanılır. bu ağlaron işletim sisteminde karşılığı var. 
+ip adresi seçtikte sonra sql authet. ile bağlanırız. windows kabul etmez. güvenlik duvarı nedeniyle bağlanamayız.
+
+managed studio ana makinada aç. yine ip şifre vs girsekte girişimiz engellenir.
+güvenlik duvarına izin verme, win defender firewall with... açarız bilgisayarda. inbound rules girip new rules yapıcaz, custom, all programs, tcp port protocol, specicel port, 1433, allow on connection, hepsi seçil, isim ver, finish
+192.168.133.132:1433 --> soket
+nat network seçili olsaydı dışarıdan bağlantı olurdu.
+
+veritabanları databasestan taanımlayacağız. 
+	-system databases  --master(veritabanı ile ilgili her şeyi tutar, sistem, sunucu bilgileri vs her şey)
+					--model(şablon, herhangi veri tabanı oluştururken içerisinde olması gereken her şey burdan kopyalanıyor, bunda yaptığımız değişiklikler diğer oluştruduğumuz yeni tablolaerı da etkiler. model kullanılırken yeni veritabanı oluşamıyor)
+					--msdb(sunucuyu kurarken ya da sonrasında belirlediğimiz görevleri (agent) bu bilgiler buraya yazılır.)
+					--tempdb (temel sql komutları, sorgulama yaparken veriler arasında gruplar yapa ve sorgulamayı gruplar içesirinde yapar. bu grup bilgisi sanal olarak ayrı tabloya alınır ve bu tablolar burda tutuluyor. geçici tabloları buraya da atabiliriz.)
+								--> sql kendi veritabanlarıdır.
+	-databases snapshots
+yeni oluşturulan veritabanları bunun altına eklenir.
+vei tabanında veriler tablolarda tutulur. excel tablosu gibi
+databases sağ tık new databases > options > collation (dil kuralları ile ilgili kurallar.) > compatibility level (uyumluluk seviyesi) 
+> general > her veri tabanı iki dosyayla tutulur - rows primary(kalıcı)(mdf), log (ldf)
+diskte pageler oluşuyor ve disk bunları birbirine bağlıypr. başlangıç boyutu genelde 8 mb olur.
+autogrowth dosya nasıl büyütülecek. eğer veri çok hızlı gelişiyorsa yüzde olarak büyüme oranı seçmeliyiz.
+
+scripte basarsak veri tabanı için gerekli cümlesi oluşturur.
+
+tables sağ tık new
+isim değiken identity specification yes olacak
+varchar ve char 10 karakter her karakter 1 byte , varchar yazılan isim kadar diskten yer tutar, charda ise 10 karakterlik yer tutar
+char aramada daha hızlı
+nchar unicode karakter tutar
+varcharda 8000 bin karakter tutar
+sql server dili tsql dir.
+oracle dili plsql
+ 
+
+
+	create database VERİTABANIADI -->  veritabanı oluşturma kodu
+	drop database VERİTABANIADI  --> veritabanı silme kodu
+
+	sp_who  --> kim ne kullanıyor görebiliyoruz.
+
+İADİ VE NORMALİZASYON
+
+
+İLİŞKİSEL MODELE GİRİŞ
+-->attributes öz nitelikler (kolon)
+-->satır tuples (birbiriyle ilgili verileri içerir)
+
+--> A1,A2,...AN --> nitelikler
+--> R= (--> A1,A2,...AN) --> ilişki şeması
+--domain= bir ilişkideki bir niteliğin alabileceği değer alır. eğer sen deper atamazsan seçtiğin değişkenin sqldeki limiti (int = 2, ..., ...., ...) seçilir.
+--bir öz niteliğin değeri ikiye bölünmemeli, parçalanmamalı. atomik olmalı. 
+--tuplelar rastgele bir sırada saklanabilir.
+
+anahtarlar
+--indexleme: sırasız şekilde kaydedilmiş verileri indexlersek(satır tabnımlama) veriye hızlıca erişir. ağaç veri yapısı. 
+--indexleme primarykey alanındaki değerler tabloda bir kez tekrar eder, varsayılan olarak indexlenir. daha hızlıdır.
+--anahtar tek başına bir satırda ifade ediyor olabilmeli. birden fazla tekrar eden değer varsa o anahtar olamaz.
+--anahtar indexlidir.
+varlık, entity, kayıt, satır, ilişki = aynı anlam
+
+aday anahtar : minimum özellik taşıyan nitelikleri olan sütunları var
+primarykey : birincil anahtar seçtiğimiz anahtar
+otoincremind alan sorgulamada kolaylık sağlar
