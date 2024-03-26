@@ -1,4 +1,4 @@
-wind auth. herhangi bir şifre girmeden girebiliriz
+swind auth. herhangi bir şifre girmeden girebiliriz
 sql server auth. sa kullanıcı adıyla giriliyor.
 
 configuration manager -- servis ayarlamalrı yaparız.
@@ -68,3 +68,168 @@ varlık, entity, kayıt, satır, ilişki = aynı anlam
 aday anahtar : minimum özellik taşıyan nitelikleri olan sütunları var
 primarykey : birincil anahtar seçtiğimiz anahtar
 otoincremind alan sorgulamada kolaylık sağlar
+
+
+
+E-R Modeli Kullanarak Veritabanı Tasarımı
+firebase= google veri tabanı (nosql)
+
+varlık ilişki modeli (entity  relation -ER (-ERD diagram) modeli)
+varlık: bir tablodaki bir satır (varlık= entity,kayıt, satır, ilişki) birden fazla niteliğe sahiptir. varlıklar niteliklerden oluşur.
+
+nitelik = öz nitelik, sütun, alan (field) aynı anlam
+ilişki: ilişkisel veri tabanımızın temelini oluşturur.
+
+varlık setleri
+varlıkların grubuna varlık kümesi denir.
+varlık kğmesi ve tablo birbirine denk. tabo varlıklardan oluşur, varlık niteliklerden oluşuri.
+instructor = (ID, name, salary) = varlık kümesini ifade eder. 
+varlıklardan birinin altını çizersek o primary key, birincil anahatr demektir.
+
+ER diyagram gösterimi 
+1. gösterim
+---------	
+|_______| tabloyu varlıkları gösterir
+|	| nitelikleri gösterir
+|_______|
+
+2. gösterim
+kare çizilir için başlık yazılır bu varlık
+elips şekli ile çizilir oklarla gösterilir bu da nitelikleri gösterir
+
+
+iki varlığı ilişkilendiren çekil baklava modeli
+varlık(instructor) 	|---/\---|  varlık (student)
+			 advisor 
+			|---\/---|
+
+
+ekstra bir field gelirse çizgi ile birleştirilir.
+varlık(instructor) 	|---/\---|  varlık (student)
+			 advisor 
+			|---\/---|
+			     |
+			     |
+			  | DATE |
+
+kardinalite __ çokluk
+
+one the one == bir tabloda bir varlık (tabloyu ayırmak isteğe bağlı)
+one to many == bir tablodaki bir kayıt diğer tablodaki birden fazla kayıt ile ilişki olabilir.
+many to many == ilave tablo demek, veri tabanıyla bir ilişkisi yok
+
+-- birebir
+-> çok anlamına gelir.
+
+
+PRİMARY KEY NASIL SEÇİLİR
+ADAY ANAHTARDAN PRİMARY KEY NASIL SEÇİLİR ÇIKKKKAAAAAAAAAAAAARRRRRRRRRRRRRRRRRRRRRRR
+
+bir tabloda bir anahtar var
+index diskte yer kaplars
+
+
+
+
+
+
+
+NORMALİZASYON
+6 formu var.
+normalizasyon amacı
+
+
+
+BAĞIMLILIK
+R=(X,Y)
+fonksiyonel bağımlılık
+x->Y = X'in değerini biliyorsan y nin değerlerini çıkarabilirsin.
+
+1. normal form (1NF) ÇIIIKKKKKKAAAAAAARRRRRRRRRRRR
+*bir sutünde tek tip veri olmalı (atomiklik) kendi içersinde bölünemez
+*özel karaketerlerle ayrılmış birden fazla veri bbulunmamalı (virgül, çizgi vs)
+*aynı tip veriler birden fazla sütuna dağıtılmalı alta satır açmalı 
+*her satırı eşsiz ifade edebilecek anahtarla belirlenmeli (ogr_no ve ders anahtar)
+
+Sorunlar
+*Satır ekleme s.
+*Satır silme s.
+*Satır güncelleme s.
+
+
+
+1. normal form uygulanmadan 2. normal form uygılanamaz.
+
+2. Normal form
+*güncelleme sorunu giderilmeye çalışılır.
+*satırlardaki tekrarların yok edilmesi
+*geçişli bağımlılıkları ortadan kaldırma
+*her alan anahtara bağımlı olmalı
+*iki anahtara da bağlı değilse diğer anahtardan itibaren farklı tabloya ayrılır.
+
+Sorunlar
+*Satır ekleme s.
+*Satır silme s.
+
+3. Normal Form
+*Anahtar olmayan sütunların arasında bağımlılık olmamalı (2. formdan ayrılan özellik)
+*Geçişli bağımlılıklar ortadan kaldırılmalı.
+*ya başka bir tablonun anagtar sütunu ile ya da bulunduğu tablonun sü...
+
+
+Boyce-codd normal form (3.5 NF)
+*birden fazla anahtarı olan tablolardaa karşımıza çıkabilir
+*belirleyici: bağımlılıkta sol tarafta olan sütunlara denir.
+*A--->B  (burada A belirleyici)
+*her belirleyici anahtar olmalı.
+
+STANDART VERİ TABANI HALİNE GELİR.
+
+
+4. Normal form
+*sütunların anahtar ile 1-n ilişkisi olamaz yani tekrar eden veri olmamalı
+
+
+5. Normal form
+*4.nf uyan tasarım 3.nf uymaz ve tekrar 3.nfa uygun hale getirirsin.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
